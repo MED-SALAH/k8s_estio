@@ -1,0 +1,27 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: workstation
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - workstation-gateway
+  http:
+    - name: "default-workstation"
+      match:
+        - uri:
+            exact: /
+        - uri:
+            prefix: /app
+        - uri:
+            prefix: /core
+        - uri:
+            prefix: /vendor
+        - uri:
+            prefix: /websockify
+      route:
+        - destination:
+            host: workstationmoh
+            port:
+              number: 8080

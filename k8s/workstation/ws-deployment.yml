@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workstationmoh
+  labels:
+    app: workstationmoh
+    version: v1
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workstationmoh
+      version: v1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: workstationmoh
+        version: v1
+    spec:
+      containers:
+        - name: "dsflow-ui-work-station"
+          image: uk.icr.io/bigapps-ns/dsflow_ui_work-station:3
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 6901
+              protocol: TCP
+          volumeMounts:
+            - name: workstationmoh-persistent-storage
+              mountPath: /data/moh
+      volumes:
+        - name: workstationmoh-persistent-storage
+          persistentVolumeClaim:
+            claimName: workstationmoh-pvc

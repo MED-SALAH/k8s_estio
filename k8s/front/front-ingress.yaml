@@ -1,0 +1,13 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: front-ingress
+spec:
+  rules:
+    - host: workstation.mycluster-733089-5178563cdd39f2fe207476cebc317f93-0001.eu-gb.containers.appdomain.cloud
+      http:
+        paths:
+          - backend:
+              serviceName: front-nodeport
+              servicePort: 8080
